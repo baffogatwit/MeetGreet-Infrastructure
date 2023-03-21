@@ -23,28 +23,28 @@ STEPS TO LOCALLY RUN MEETGREET BACKEND:
 
     sed -i -e 's/replace_password/{YOUR ROOT PASSWORD}/g' index.js
 
-5) In the same terminal window, run the command "node index.js". The NodeJS Express Service will start and can be accessed with the URL:  http://localhost:5050.
+5) In the same terminal window, run the command "node index.js". The NodeJS Express Service will start and can be accessed with the URL:  http://localhost:5500.
 
     The endpoints current working include: 
 
     Sign In User:
 
-    http://localhost:5050/sign-in-user/:email/:password
+    http://localhost:5500/sign-in-user/:email/:password
 
     Example Usage:
 
-    http://localhost:5050/sign-in-user/baffog@wit.edu/test123
+    http://localhost:5500/sign-in-user/baffog@wit.edu/test123
 
 
 
 
     Register User:
 
-    http://localhost:5050/register-user/:email/:password
+    http://localhost:5500/register-user/:email/:password
 
     Example Usage:
 
-    http://localhost:5050/register-user/baffog@wit.edu/test123
+    http://localhost:5500/register-user/baffog@wit.edu/test123
 
     You can test these URL's in your browser to get a sense of what responses can be expected.
 
