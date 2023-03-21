@@ -20,6 +20,7 @@ This will prompt you for the root user password. Once you enter it, you should h
 4) Next, open a terminal and cd/navigate into the MeetGreet-Infrastructure/NodeJS folder.
 
 In the command below, replace "{YOUR ROOT PASSWORD}" with the root password for your MYSQL server. Once done, run it.
+
 sed -i -e 's/replace_password/{YOUR ROOT PASSWORD}/g' index.js
 
 5) In the same terminal window, run the command "node index.js". The server will start via the url http://localhost:5050 of your machine. 
@@ -33,6 +34,8 @@ http://localhost:5050/sign-in-user/:email/:password
 Example Usage:
 
 http://localhost:5050/sign-in-user/baffog@wit.edu/test123
+
+
 
 
 Register User:
