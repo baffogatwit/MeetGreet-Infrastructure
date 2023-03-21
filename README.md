@@ -15,7 +15,7 @@ STEPS TO LOCALLY RUN MEETGREET BACKEND:
 
     This will prompt you for the root user password. Once you enter it, you should have access to MySQL on your device.
 
-3) After installation, navigate to the MYSQL/starting_init.sql file present in this project. Copy the code, paste it into your terminal running MySQL and press enter. You should receive a message stating the Query/Operation was OK. This concludes the setup of the MYSQL server. If you wish to have a clean reset of the MeetGreet database, use the code from the MYSQL/existing_init.sql file while accessing your local MYSQL server. 
+3) After installation, navigate to the MYSQL/starting_init.sql file present in this project. Copy the code, paste it into your terminal running MySQL and press enter. You should receive a message stating the Query/Operation was OK. This concludes the setup of the MYSQL server. If you wish to "reset" the MeetGreet database back to its orginal state after any changes are made, repeat this step using the MYSQL/existing_init.sql instead. 
 
 4) Next, open a terminal and cd/navigate into the MeetGreet-Infrastructure/NodeJS folder.
 
