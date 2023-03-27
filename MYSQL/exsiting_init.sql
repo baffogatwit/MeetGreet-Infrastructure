@@ -13,6 +13,7 @@ CREATE TABLE User (
     GeoLocation varchar(255) DEFAULT NULL
 );
 
+-- Event, Events
 CREATE TABLE Event (
     ID int PRIMARY KEY AUTO_INCREMENT,
     Title varchar(255) NOT NULL,
@@ -22,12 +23,14 @@ CREATE TABLE Event (
     GeoLocation varchar(255) NOT NULL,
     ScheduledDateTime datetime NOT NULL,
     FOREIGN KEY (CreatedByUserID) REFERENCES User(ID)
+    -- Image Connection
 );
 
 CREATE TABLE AttendingIndication (
     ID int PRIMARY KEY,
     UserID int NOT NULL,
     EventID int NOT NULL,
+    -- Attending, Interested, Not Attending
     FOREIGN KEY (UserID) REFERENCES User(ID),
     FOREIGN KEY (EventID) REFERENCES Event(ID)
 );
@@ -42,3 +45,7 @@ CREATE TABLE StaffMemberRelations (
 
 INSERT INTO User (Email, IsEmailVerified, Password, DateCreated, GeoLocation) VALUES ("baffog@wit.edu", 1, "test123", NOW(), "-80.89390, 133.03446");
 INSERT INTO Event (Title, CreatedByUserID, Description, GeoLocation, ScheduledDateTime) VALUES ("Opening Day For Comm Ave Center", 1, "Come celebrate our opening day. Free sandwich for all attendees.", "-80.89390, 133.03446", "2023-03-20 15:45:33");
+
+-- API KEY TABLE -> EmailAPIKey
+
+-- Images Table (3 or 4 images per event)
