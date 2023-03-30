@@ -49,42 +49,51 @@ CREATE TABLE UserTokens (
 );
 
 
-
-
-
 -- Event, Events
 CREATE TABLE Event (
-    ID int PRIMARY KEY AUTO_INCREMENT,
-    Title varchar(255) NOT NULL,
+    Id int PRIMARY KEY AUTO_INCREMENT,
+    Title varchar(500) NOT NULL,
     CreatedAt datetime DEFAULT NOW() NOT NULL,
-    CreatedByUserID int NOT NULL,
-    Description varchar(255) NOT NULL,
-    GeoLocation varchar(255) NOT NULL,
+    CreatedByUserId VARCHAR(450) NOT NULL,
+    Description varchar(500) NOT NULL,
+    GeoLocation_Longitude DOUBLE NOT NULL,
+    GeoLocation_Latitude DOUBLE NOT NULL,
+    ZipCode varchar(500) NOT NULL,
+    City varchar(500) NOT NULL,
+    Address varchar(500) NOT NULL,
     ScheduledDateTime datetime NOT NULL,
-    FOREIGN KEY (CreatedByUserID) REFERENCES User(ID)
-    -- Image Connection
+    Radius int,
+    FOREIGN KEY (CreatedByUserId) REFERENCES User(Id)
 );
 
+-- Attending - 0, Interested - 1, Not Attending - 2
 CREATE TABLE AttendingIndication (
     ID int PRIMARY KEY,
-    UserID int NOT NULL,
+    UserID VARCHAR(450) NOT NULL,
     EventID int NOT NULL,
-    -- Attending, Interested, Not Attending
-    FOREIGN KEY (UserID) REFERENCES User(ID),
-    FOREIGN KEY (EventID) REFERENCES Event(ID)
+    Status int NOT NULL,
+    FOREIGN KEY (UserID) REFERENCES User(Id),
+    FOREIGN KEY (EventID) REFERENCES Event(Id)
 );
 
-CREATE TABLE StaffMemberRelations (
-    ID int PRIMARY KEY,
-    UserID int NOT NULL,
-    EventID int NOT NULL,
-    FOREIGN KEY (UserID) REFERENCES User(ID),
-    FOREIGN KEY (EventID) REFERENCES Event(ID)
+CREATE TABLE Image (
+    Id int PRIMARY KEY AUTO_INCREMENT,
+    EventId int NOT NULL,
+    URL varchar(2083) NOT NULL,
+    FOREIGN KEY (EventId) REFERENCES Event(Id)
 );
+
+CREATE TABLE EmailAPIKey (
+    Id int PRIMARY KEY AUTO_INCREMENT,
+    APIKey varchar(255)
+);
+
+-- CREATE TABLE StaffMemberRelations (
+--     ID int PRIMARY KEY,
+--     UserID int NOT NULL,
+--     EventID int NOT NULL,
+--     FOREIGN KEY (UserID) REFERENCES User(ID),
+--     FOREIGN KEY (EventID) REFERENCES Event(ID)
+-- );
 
 INSERT INTO Event (Title, CreatedByUserID, Description, GeoLocation, ScheduledDateTime) VALUES ("Opening Day For Comm Ave Center", 1, "Come celebrate our opening day. Free sandwich for all attendees.", "-80.89390, 133.03446", "2023-03-20 15:45:33");
-
--- API KEY TABLE -> EmailAPIKey
-
--- Images Table (3 or 4 images per event)
-
