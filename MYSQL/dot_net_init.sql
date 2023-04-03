@@ -68,7 +68,7 @@ CREATE TABLE Event (
 
 -- Attending - 0, Interested - 1, Not Attending - 2
 CREATE TABLE AttendingIndication (
-    ID int PRIMARY KEY,
+    ID int PRIMARY KEY AUTO_INCREMENT,
     UserID VARCHAR(450) NOT NULL,
     EventID int NOT NULL,
     Status int NOT NULL,
