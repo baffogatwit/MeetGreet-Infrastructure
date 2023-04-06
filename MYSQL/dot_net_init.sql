@@ -79,7 +79,7 @@ CREATE TABLE AttendingIndication (
 CREATE TABLE Image (
     Id int PRIMARY KEY AUTO_INCREMENT,
     EventId int NOT NULL,
-    URL varchar(2083) NOT NULL,
+    S3Key varchar(2083) NOT NULL,
     FOREIGN KEY (EventId) REFERENCES Event(Id)
 );
 
@@ -88,12 +88,12 @@ CREATE TABLE EmailAPIKey (
     APIKey varchar(255)
 );
 
--- CREATE TABLE StaffMemberRelations (
---     ID int PRIMARY KEY,
---     UserID int NOT NULL,
---     EventID int NOT NULL,
---     FOREIGN KEY (UserID) REFERENCES User(ID),
---     FOREIGN KEY (EventID) REFERENCES Event(ID)
--- );
 
-INSERT INTO Event (Title, CreatedByUserID, Description, GeoLocation, ScheduledDateTime) VALUES ("Opening Day For Comm Ave Center", 1, "Come celebrate our opening day. Free sandwich for all attendees.", "-80.89390, 133.03446", "2023-03-20 15:45:33");
+CREATE TABLE AWSAPIKey (
+    Id int PRIMARY KEY AUTO_INCREMENT,
+    AccessKey varchar(500),
+    SecretAccessKey varchar(500)
+);
+
+INSERT INTO EmailAPIKey (APIKey) VALUES ("[VALUE-REDACTED]");
+INSERT INTO AWSAPIKey (AccessKey, SecretAccessKey) VALUES ("[VALUE-REDACTED]", "[VALUE-REDACTED]");
