@@ -15,10 +15,36 @@ It is a [Maven](https://maven.apache.org/) based project, so you can open this p
  * `cdk diff`        compare deployed stack with current state
  * `cdk docs`        open CDK documentation
 
+In order to use AWS Services, you need to create an account via https://aws.amazon.com. You may qualify for a free tier account but if not, charges may be incurred if you attempt to create this stack. Please check your eligibility: https://aws.amazon.com/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=*all&awsf.Free%20Tier%20Categories=*all
 
-Please follow these steps to deploy a MeetGreet config 
+Please follow these steps to deploy a MeetGreet config.
 
-1) aws configure
-2) cdk bootstrap
-3) cdk deploy --profile default
+NOTE: Before following any of these steps, you must download the aws-cli and the aws-cdk to your computer.
 
+Installing the AWS CLI Docs: https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+Installing the AWS CDK Docs: https://docs.aws.amazon.com/cdk/v2/guide/cli.html
+Installing MYSQL to your computer: https://dev.mysql.com/doc/refman/8.0/en/installing.html (You will need to determine the correct version to install based on your OS and the requirements of said version.)
+
+1) Navigate to the AWS-Infrastructure-As-Code package on your device.
+    You will need to generate an API Key via the AWS Console to user their services. This is not something that can be done programatically. 
+    a) Search for IAM. Click on Users -> Add Users. Add a username and press next. 
+    b) Click on 'Attach Policies Directly'.
+    c) Search for 'AdministratorAccess' and check it to add this policy to the user. Press the Next button at the bottom of the page.
+    d) Press 'Create User'. You will be navigated to a list of the current users for your account. Click on the user you just created.
+    e) Click on the 'Security Credentials' tab and find the 'Access Keys' header. Click on 'Create Access Key'. 
+    f) Select 'Command Line Interface', agree to the terms and press next. You may add a description if you wish on the next page. 
+    e) Then, press 'Create Access Key'. You will be presented with a screen displaying for Access Key and Secret Access Key. Make sure to take note of both and store them in a secure location. You can also opt to download the CSV file.
+
+2) aws configure -> When prompted for your Access Key and Secret Access Key, please provide the ones created in step 1.
+3) cdk bootstrap
+4) cdk deploy --profile default
+
+The MeetGreet CloudFormation stack will begin deployment. Please note that this will take some time but the resources should begin to be provisioned on your AWS account. You can see detailed progress updates by navigating to the 'CloudFormation' console on AWS or less detailed progress updated by following along in the terminal. 
+
+Steps Following a Successful CDK Deployment.
+
+Once deployment completes, you will be have your own stack of MeetGreet's services running. You will need to connect to the AWS RDS MYSQL database created in order to create the MeetGreet database using the commands present in the 'MYSQL/dot_net_init.sql' file of this package. This can be done using the 'mysql -h <host name> -u admin -p' command from a terminal. The host name of your RDS MYSQL databse is dynamically generated and can be found in the RDS console on AWS. When prompted for a password, please note that the default password is 'password'. You may need to install mysql to your system if it does not have it installed already. 
+
+Once the database has been configured, you must change the DefaultConnection:ConnectionString (located in appsettings.json) inside of the MeetGreet's ASP.NET project to that of the RDS MYSQL instance that was created in your AWS account. You must also change the value of the BUCKET_NAME string variable present in the MeetGreet/AmazonS3HelperClasses/AmazonS3Helper.cs class to that of your S3 bucket. S3 bucket names are globally unique so this change must be made. You can find your bucket's name via the S3 console on AWS. 
+
+After the above steps have been completed, you will have an AWS Stack provsioned that can support the MeetGreet application. Please note that this is unneccessary if you're looking to just run MeetGreet; As previously mentioned, the application is configured to connect with and work with our configured AWS stack for its 'production' mode.
