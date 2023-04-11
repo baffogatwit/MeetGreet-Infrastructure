@@ -18,67 +18,67 @@ import software.amazon.awscdk.services.s3.Bucket;
 import software.amazon.awscdk.services.s3.BucketEncryption;
 
 public class AwsInfrastructureAsCodeStack extends Stack {
-    public AwsInfrastructureAsCodeStack(final Construct scope, final String id) {
-        this(scope, id, null);
-    }
+        public AwsInfrastructureAsCodeStack(final Construct scope, final String id) {
+                this(scope, id, null);
+        }
 
-    public AwsInfrastructureAsCodeStack(final Construct scope, final String id, final StackProps props) {
-        super(scope, id, props);
-        // The code that defines your stack goes here
-        final Vpc vpc = Vpc.Builder.create(this, id + "-vpc")
-                .natGateways(1)
-                .natGatewaySubnets(SubnetSelection.builder().subnetType(SubnetType.PUBLIC).build())
-                .build();
+        public AwsInfrastructureAsCodeStack(final Construct scope, final String id, final StackProps props) {
+                super(scope, id, props);
+                // The code that defines your stack goes here
+                final Vpc vpc = Vpc.Builder.create(this, id + "-vpc")
+                                .natGateways(1)
+                                .natGatewaySubnets(SubnetSelection.builder().subnetType(SubnetType.PUBLIC).build())
+                                .natGatewayProvider(NatProvider.gateway())
+                                .build();
 
-        final Policy s3AccessPolicy = Policy.Builder.create(this, id + "-s3policy")
-                .statements(Arrays.asList(PolicyStatement.Builder
-                        .create()
-                        .effect(Effect.ALLOW)
-                        .actions(
-                                Arrays.asList(
-                                        "s3:*"))
-                        .resources(
-                                Arrays.asList("*"))
-                        .build()))
-                .build();
+                final Policy s3AccessPolicy = Policy.Builder.create(this, id + "-s3policy")
+                                .statements(Arrays.asList(PolicyStatement.Builder
+                                                .create()
+                                                .effect(Effect.ALLOW)
+                                                .actions(
+                                                                Arrays.asList(
+                                                                                "s3:*"))
+                                                .resources(
+                                                                Arrays.asList("*"))
+                                                .build()))
+                                .build();
 
-        final User meetGreetASP = User.Builder.create(this, id)
-                .userName("meet-greet-asp")
-                .build();
+                final User meetGreetASP = User.Builder.create(this, id)
+                                .userName("meet-greet-asp")
+                                .build();
 
-        s3AccessPolicy.attachToUser(meetGreetASP);
+                s3AccessPolicy.attachToUser(meetGreetASP);
 
-        final IInstanceEngine instanceEngine = DatabaseInstanceEngine.mysql(
-                MySqlInstanceEngineProps.builder()
-                        .version(MysqlEngineVersion.VER_8_0_28)
-                        .build());
+                final IInstanceEngine instanceEngine = DatabaseInstanceEngine.mysql(
+                                MySqlInstanceEngineProps.builder()
+                                                .version(MysqlEngineVersion.VER_8_0_28)
+                                                .build());
 
-        final SecurityGroup databaseSecurityGroup = SecurityGroup.Builder.create(this, id + "-sg")
-                .vpc(vpc)
-                .allowAllOutbound(true)
-                .build();
+                final SecurityGroup databaseSecurityGroup = SecurityGroup.Builder.create(this, id + "-sg")
+                                .vpc(vpc)
+                                .allowAllOutbound(true)
+                                .build();
 
-        databaseSecurityGroup.addIngressRule(databaseSecurityGroup, Port.allTraffic());
-        databaseSecurityGroup.addIngressRule(databaseSecurityGroup, Port.allIcmp());
-        databaseSecurityGroup.addIngressRule(databaseSecurityGroup, Port.allTcp());
+                databaseSecurityGroup.addIngressRule(databaseSecurityGroup, Port.allTraffic());
+                databaseSecurityGroup.getConnections().allowFromAnyIpv4(Port.allTraffic());
 
-        final DatabaseInstance databaseInstance = DatabaseInstance.Builder.create(this, id + "-rds")
-                .vpc(vpc)
-                .vpcSubnets(SubnetSelection.builder().subnetType(SubnetType.PUBLIC).build())
-                .instanceType(InstanceType.of(InstanceClass.BURSTABLE3, InstanceSize.MICRO))
-                .engine(instanceEngine)
-                .instanceIdentifier(id + "-rds")
-                .publiclyAccessible(true)
-                .securityGroups(Arrays.asList(databaseSecurityGroup))
-                .credentials(Credentials.fromPassword("admin", SecretValue.unsafePlainText("password")))
-                .build();
+                final DatabaseInstance databaseInstance = DatabaseInstance.Builder.create(this, id + "-rds")
+                                .vpc(vpc)
+                                .vpcSubnets(SubnetSelection.builder().subnetType(SubnetType.PUBLIC).build())
+                                .instanceType(InstanceType.of(InstanceClass.BURSTABLE3, InstanceSize.MICRO))
+                                .engine(instanceEngine)
+                                .instanceIdentifier(id + "-rds")
+                                .publiclyAccessible(true)
+                                .securityGroups(Arrays.asList(databaseSecurityGroup))
+                                .credentials(Credentials.fromPassword("admin", SecretValue.unsafePlainText("password")))
+                                .build();
 
-        final Bucket targetBucket = Bucket.Builder.create(this, id + "-s3")
-                .bucketName(PhysicalName.GENERATE_IF_NEEDED)
-                .encryption(BucketEncryption.S3_MANAGED)
-                .versioned(Boolean.TRUE)
-                .build();
+                final Bucket targetBucket = Bucket.Builder.create(this, id + "-s3")
+                                .bucketName(PhysicalName.GENERATE_IF_NEEDED)
+                                .encryption(BucketEncryption.S3_MANAGED)
+                                .versioned(Boolean.TRUE)
+                                .build();
 
-    }
+        }
 
 }
