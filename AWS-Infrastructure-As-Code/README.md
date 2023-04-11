@@ -25,15 +25,15 @@ Installing the AWS CLI Docs: https://docs.aws.amazon.com/cli/latest/userguide/ge
 Installing the AWS CDK Docs: https://docs.aws.amazon.com/cdk/v2/guide/cli.html
 Installing MYSQL to your computer: https://dev.mysql.com/doc/refman/8.0/en/installing.html (You will need to determine the correct version to install based on your OS and the requirements of said version.)
 
-1) Navigate to the AWS-Infrastructure-As-Code package on your device.
-    You will need to generate an API Key via the AWS Console to user their services. This is not something that can be done programatically. 
-    a) Search for IAM. Click on Users -> Add Users. Add a username and press next. 
-    b) Click on 'Attach Policies Directly'.
-    c) Search for 'AdministratorAccess' and check it to add this policy to the user. Press the Next button at the bottom of the page.
-    d) Press 'Create User'. You will be navigated to a list of the current users for your account. Click on the user you just created.
-    e) Click on the 'Security Credentials' tab and find the 'Access Keys' header. Click on 'Create Access Key'. 
-    f) Select 'Command Line Interface', agree to the terms and press next. You may add a description if you wish on the next page. 
-    e) Then, press 'Create Access Key'. You will be presented with a screen displaying for Access Key and Secret Access Key. Make sure to take note of both and store them in a secure location. You can also opt to download the CSV file.
+1) Navigate to the AWS-Infrastructure-As-Code package on your device.\
+    You will need to generate an API Key via the AWS Console to user their services. This is not something that can be done programatically.\ 
+    a) Search for IAM. Click on Users -> Add Users. Add a username and press next.\ 
+    b) Click on 'Attach Policies Directly'.\
+    c) Search for 'AdministratorAccess' and check it to add this policy to the user. Press the Next button at the bottom of the page.\
+    d) Press 'Create User'. You will be navigated to a list of the current users for your account. Click on the user you just created.\
+    e) Click on the 'Security Credentials' tab and find the 'Access Keys' header. Click on 'Create Access Key'.\ 
+    f) Select 'Command Line Interface', agree to the terms and press next. You may add a description if you wish on the next page.\
+    e) Then, press 'Create Access Key'. You will be presented with a screen displaying for Access Key and Secret Access Key. Make sure to take note of both and store them in a secure location. You can also opt to download the CSV file.\
 
 2) aws configure -> When prompted for your Access Key and Secret Access Key, please provide the ones created in step 1.
 3) cdk bootstrap
