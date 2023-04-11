@@ -26,7 +26,8 @@ Installing the AWS CDK Docs: https://docs.aws.amazon.com/cdk/v2/guide/cli.html
 Installing MYSQL to your computer: https://dev.mysql.com/doc/refman/8.0/en/installing.html (You will need to determine the correct version to install based on your OS and the requirements of said version.)
 
 1) Navigate to the AWS-Infrastructure-As-Code package on your device.\
-    You will need to generate an API Key via the AWS Console to user their services. This is not something that can be done programatically.\ 
+    You will need to generate an API Key via the AWS Console to user their services. This is not something that can be done programatically.
+     
     a) Search for IAM. Click on Users -> Add Users. Add a username and press next.\ 
     b) Click on 'Attach Policies Directly'.\
     c) Search for 'AdministratorAccess' and check it to add this policy to the user. Press the Next button at the bottom of the page.\
