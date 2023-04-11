@@ -17,6 +17,8 @@ It is a [Maven](https://maven.apache.org/) based project, so you can open this p
 
 In order to use AWS Services, you need to create an account via https://aws.amazon.com. You may qualify for a free tier account but if not, charges may be incurred if you attempt to create this stack. Please check your eligibility: https://aws.amazon.com/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=*all&awsf.Free%20Tier%20Categories=*all
 
+Please note that we are not responsible for any charges that you may incur if you wish to AWS services.
+
 ## Please follow these steps to deploy a MeetGreet config.
 
 NOTE: Before following any of these steps, you must download the aws-cli and the aws-cdk to your computer.
@@ -39,7 +41,7 @@ Installing MYSQL to your computer: https://dev.mysql.com/doc/refman/8.0/en/insta
 
 ### 2) `aws configure` -> When prompted for your Access Key and Secret Access Key, please provide the ones created in step 1.
 ### 3) `cdk bootstrap`
-### 4) `cdk deploy` --profile default
+### 4) `cdk deploy --profile default`
 
 The MeetGreet CloudFormation stack will begin deployment. Please note that this will take some time but the resources should begin to be provisioned on your AWS account. You can see detailed progress updates by navigating to the 'CloudFormation' console on AWS or less detailed progress updated by following along in the terminal. 
 
@@ -47,6 +49,14 @@ The MeetGreet CloudFormation stack will begin deployment. Please note that this 
 
 Once deployment completes, you will be have your own stack of MeetGreet's services running. You will need to connect to the AWS RDS MYSQL database created in order to create the MeetGreet database using the commands present in the `MYSQL/dot_net_init.sql` file of this package. This can be done using the `mysql -h <host name> -u admin -p` command from a terminal. The host name of your RDS MYSQL databse is dynamically generated and can be found in the RDS console on AWS. When prompted for a password, please note that the default password is `password`. You may need to install mysql to your system if it does not have it installed already. 
 
+**Y*ou must also provide an API Key** for the `(APIKey) VALUES ("[VALUE-REDACTED]")` entry in the `dot_net_init.sql`. This is used for the SendGrid email verification API (https://sendgrid.com). Our service is configured to not allow users to login without a verified email so this will block the functionality from our site of being accessed if not configured.
+
+**You must also provide a value for the AWS AWSAPIKey** for the `(AccessKey, SecretAccessKey) VALUES ("[VALUE-REDACTED]", "[VALUE-REDACTED]")` entry in the `dot_net_init.sql` file. This is used for the service to access certain AWS resources and not configuring this correctly may result in MeetGreet not working correctly, or at all. You can create your own AWS API Keys using the AWS console and these keys must provide full access to AWS S3. 
+
 Once the database has been configured, you must change the `DefaultConnection:ConnectionString` (located in appsettings.json) inside of the MeetGreet's ASP.NET project to that of the RDS MYSQL instance that was created in your AWS account. You must also change the value of the `BUCKET_NAME` string variable present in the `MeetGreet/AmazonS3HelperClasses/AmazonS3Helper.cs` class to that of your S3 bucket. S3 bucket names are globally unique so this change must be made. You can find your bucket's name via the S3 console on AWS. 
 
 After the above steps have been completed, you will have an AWS Stack provsioned that can support the MeetGreet application. Please note that this is unneccessary if you're looking to just run MeetGreet; As previously mentioned, the application is configured to connect with and work with our configured AWS stack for its 'production' mode.
+
+## Deleting The Stack
+
+In order to Delete the MeetGreet Infrastructure Stack, navigate to the CloudFormation page on the AWS Console. Select the `AwsInfrastructureAsCodeStack` stack and click the delete button. This will deprovision the stack and delete any resources that it created. Once the status of the stack changes to 'DELETE_COMPLETE', the stack and all of its resources have been deleted successfully (it may also disapear from your list of stacks prior to the status change). Please note that if an error occurs during resource deprovision, the stuck resources may need to be deleted manually.

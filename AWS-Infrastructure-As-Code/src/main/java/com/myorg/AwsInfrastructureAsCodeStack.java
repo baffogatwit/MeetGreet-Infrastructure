@@ -59,6 +59,8 @@ public class AwsInfrastructureAsCodeStack extends Stack {
                 .build();
 
         databaseSecurityGroup.addIngressRule(databaseSecurityGroup, Port.allTraffic());
+        databaseSecurityGroup.addIngressRule(databaseSecurityGroup, Port.allIcmp());
+        databaseSecurityGroup.addIngressRule(databaseSecurityGroup, Port.allTcp());
 
         final DatabaseInstance databaseInstance = DatabaseInstance.Builder.create(this, id + "-rds")
                 .vpc(vpc)
