@@ -37,16 +37,16 @@ Installing MYSQL to your computer: https://dev.mysql.com/doc/refman/8.0/en/insta
     f) Select 'Command Line Interface', agree to the terms and press next. You may add a description if you wish on the next page.\
     e) Then, press 'Create Access Key'. You will be presented with a screen displaying for Access Key and Secret Access Key. Make sure to take note of both and store them in a secure location. You can also opt to download the CSV file.\
 
-### 2) aws configure -> When prompted for your Access Key and Secret Access Key, please provide the ones created in step 1.
-### 3) cdk bootstrap
-### 4) cdk deploy --profile default
+### 2) `aws configure` -> When prompted for your Access Key and Secret Access Key, please provide the ones created in step 1.
+### 3) `cdk bootstrap`
+### 4) `cdk deploy` --profile default
 
 The MeetGreet CloudFormation stack will begin deployment. Please note that this will take some time but the resources should begin to be provisioned on your AWS account. You can see detailed progress updates by navigating to the 'CloudFormation' console on AWS or less detailed progress updated by following along in the terminal. 
 
 ## Steps Following a Successful CDK Deployment.
 
-Once deployment completes, you will be have your own stack of MeetGreet's services running. You will need to connect to the AWS RDS MYSQL database created in order to create the MeetGreet database using the commands present in the 'MYSQL/dot_net_init.sql' file of this package. This can be done using the 'mysql -h <host name> -u admin -p' command from a terminal. The host name of your RDS MYSQL databse is dynamically generated and can be found in the RDS console on AWS. When prompted for a password, please note that the default password is 'password'. You may need to install mysql to your system if it does not have it installed already. 
+Once deployment completes, you will be have your own stack of MeetGreet's services running. You will need to connect to the AWS RDS MYSQL database created in order to create the MeetGreet database using the commands present in the `MYSQL/dot_net_init.sql` file of this package. This can be done using the `mysql -h <host name> -u admin -p` command from a terminal. The host name of your RDS MYSQL databse is dynamically generated and can be found in the RDS console on AWS. When prompted for a password, please note that the default password is `password`. You may need to install mysql to your system if it does not have it installed already. 
 
-Once the database has been configured, you must change the DefaultConnection:ConnectionString (located in appsettings.json) inside of the MeetGreet's ASP.NET project to that of the RDS MYSQL instance that was created in your AWS account. You must also change the value of the BUCKET_NAME string variable present in the MeetGreet/AmazonS3HelperClasses/AmazonS3Helper.cs class to that of your S3 bucket. S3 bucket names are globally unique so this change must be made. You can find your bucket's name via the S3 console on AWS. 
+Once the database has been configured, you must change the `DefaultConnection:ConnectionString` (located in appsettings.json) inside of the MeetGreet's ASP.NET project to that of the RDS MYSQL instance that was created in your AWS account. You must also change the value of the `BUCKET_NAME` string variable present in the `MeetGreet/AmazonS3HelperClasses/AmazonS3Helper.cs` class to that of your S3 bucket. S3 bucket names are globally unique so this change must be made. You can find your bucket's name via the S3 console on AWS. 
 
 After the above steps have been completed, you will have an AWS Stack provsioned that can support the MeetGreet application. Please note that this is unneccessary if you're looking to just run MeetGreet; As previously mentioned, the application is configured to connect with and work with our configured AWS stack for its 'production' mode.
