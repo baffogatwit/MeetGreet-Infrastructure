@@ -27,16 +27,22 @@ Installing the AWS CLI Docs: https://docs.aws.amazon.com/cli/latest/userguide/ge
 Installing the AWS CDK Docs: https://docs.aws.amazon.com/cdk/v2/guide/cli.html
 Installing MYSQL to your computer: https://dev.mysql.com/doc/refman/8.0/en/installing.html (You will need to determine the correct version to install based on your OS and the requirements of said version.)
 
-### 1) Navigate to the AWS-Infrastructure-As-Code package on your device.\
+### 1) Navigate to the AWS-Infrastructure-As-Code package on your device.
 
     You will need to generate an API Key via the AWS Console to use their services. This is not something that can be done programatically. Please follow these steps if you are unsure of how to do this:
 
     a) Search for IAM. Click on Users -> Add Users. Add a username and press next.\ 
+    
     b) Click on 'Attach Policies Directly'.\
+    
     c) Search for 'AdministratorAccess' and check it to add this policy to the user. Press the Next button at the bottom of the page.\
+    
     d) Press 'Create User'. You will be navigated to a list of the current users for your account. Click on the user you just created.\
+    
     e) Click on the 'Security Credentials' tab and find the 'Access Keys' header. Click on 'Create Access Key'.\ 
+    
     f) Select 'Command Line Interface', agree to the terms and press next. You may add a description if you wish on the next page.\
+    
     e) Then, press 'Create Access Key'. You will be presented with a screen displaying for Access Key and Secret Access Key. Make sure to take note of both and store them in a secure location. You can also opt to download the CSV file.\
 
 ### 2) `aws configure` -> When prompted for your Access Key and Secret Access Key, please provide the ones created in step 1.
@@ -53,7 +59,7 @@ Once deployment completes, you will be have your own stack of MeetGreet's servic
 
 **You must also provide a value for the AWS AWSAPIKey** for the `INSERT INTO AWSAPIKey (AccessKey, SecretAccessKey) VALUES ("[VALUE-REDACTED]", "[VALUE-REDACTED]")` command in the `dot_net_init.sql` file. This is used for the service to access certain AWS resources and not configuring this correctly may result in MeetGreet not working correctly, or at all. You can create your own AWS API Keys using the AWS console and these keys must provide full access to AWS S3. 
 
-Once the database has been configured, you must change the `DefaultConnection:ConnectionString` (located in appsettings.json) inside of the MeetGreet's ASP.NET project to that of the RDS MYSQL instance that was created in your AWS account. You must also change the value of the `BUCKET_NAME` string variable present in the `MeetGreet/AmazonS3HelperClasses/AmazonS3Helper.cs` class to that of your S3 bucket. S3 bucket names are globally unique so this change must be made. You can find your bucket's name via the S3 console on AWS. 
+Once the database has been configured, you must change the `DefaultConnection:ConnectionString` (located in appsettings.json) inside of the MeetGreet's ASP.NET project to that of the RDS MYSQL instance that was created in your AWS account. The same must also be done to the connectionstring in the MeetGreetContext file as well. You must also change the value of the `BUCKET_NAME` string variable present in the `MeetGreet/AmazonS3HelperClasses/AmazonS3Helper.cs` class to that of your S3 bucket. S3 bucket names are globally unique so this change must be made. You can find your bucket's name via the S3 console on AWS. 
 
 After the above steps have been completed, you will have an AWS Stack provsioned that can support the MeetGreet application. Please note that this is unneccessary if you're looking to just run MeetGreet; As previously mentioned, the application is configured to connect with and work with our configured AWS stack for its 'production' mode.
 
