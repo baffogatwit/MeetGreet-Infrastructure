@@ -24,7 +24,9 @@ Please note that we are not responsible for any charges that you may incur if yo
 NOTE: Before following any of these steps, you must download the aws-cli and the aws-cdk to your computer.
 
 Installing the AWS CLI Docs: https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+
 Installing the AWS CDK Docs: https://docs.aws.amazon.com/cdk/v2/guide/cli.html
+
 Installing MYSQL to your computer: https://dev.mysql.com/doc/refman/8.0/en/installing.html (You will need to determine the correct version to install based on your OS and the requirements of said version.)
 
 ### 1) Navigate to the AWS-Infrastructure-As-Code package on your device.
